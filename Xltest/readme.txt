@@ -1,0 +1,1 @@
+﻿xltest.exe c:\test\test.bmp c:\test\test.xls
