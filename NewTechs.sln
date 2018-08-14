@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "npoidemo", "npoidemo\npoide
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetTiles", "GetTiles\GetTiles.csproj", "{9F08B26A-468A-4785-9D60-95DAC8E1803B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetTileUI", "GetTileUI\GetTileUI.csproj", "{42EBBB64-A29C-472E-BE47-2967B1BC5124}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,18 @@ Global
 		{9F08B26A-468A-4785-9D60-95DAC8E1803B}.Release|x64.Build.0 = Release|Any CPU
 		{9F08B26A-468A-4785-9D60-95DAC8E1803B}.Release|x86.ActiveCfg = Release|Any CPU
 		{9F08B26A-468A-4785-9D60-95DAC8E1803B}.Release|x86.Build.0 = Release|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Debug|x64.Build.0 = Debug|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Debug|x86.Build.0 = Debug|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|x64.ActiveCfg = Release|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|x64.Build.0 = Release|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|x86.ActiveCfg = Release|Any CPU
+		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

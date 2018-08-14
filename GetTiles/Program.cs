@@ -14,6 +14,7 @@ namespace GetTiles
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(StringUtils.SizeToReadable(4294967296));
             Console.WriteLine("TMS切片下载器");
 
             if (args.Length > 0)
@@ -32,13 +33,13 @@ namespace GetTiles
                     urlString = "http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}";
                 }
 
-                var newUrlString = UrlStringParser.XyzTo012(urlString);
+                var newUrlString = StringUtils.XyzTo012(urlString);
 
                 Console.WriteLine("Input Folder Directory");
                 var folderString = Console.ReadLine();
                 if (String.IsNullOrEmpty(folderString))
                 {
-                    folderString = @"C:\test\gt";
+                    folderString = @"D:\test\tdt";
                 }
 
                 if (!Directory.Exists(folderString)) Directory.CreateDirectory(folderString);
@@ -56,8 +57,10 @@ namespace GetTiles
                 {
                     level = 4;
                 }
+                Console.WriteLine();
+                var td = new TileDownloader();
+                td.DownloadToFolder(newUrlString, folderString, level);
 
-                var a = new TileDownloader().DownloadToFolderAsync(newUrlString, folderString, level);
                 //a.Start();
 
 
@@ -101,7 +104,7 @@ namespace GetTiles
 
     }
 
-    public static class UrlStringParser
+    public static class StringUtils
     {
         public static string XyzTo012(string xyzString)
         {
@@ -111,6 +114,19 @@ namespace GetTiles
             temp = temp.Replace(@"{z}", @"{2}");
             temp = temp.Replace(@"{s}", @"{3}");
             return temp;
+        }
+        public static string SizeToReadable(long size)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+            double len = size;
+            int order = 0;
+            while (len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024;
+            }
+            string result = String.Format("{0:0.##} {1}", len, sizes[order]);
+            return result;
         }
 
     }
