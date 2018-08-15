@@ -35,29 +35,16 @@ namespace GetTileUI
             lastClickTime = DateTime.Now;
             var td = new TileDownloader();
             this.TD = td;
-            td.DownloadToFolder(StringUtils.XyzTo012(UrlTextbox.Text.ToString()), FolderTextbox.Text.ToString(), int.Parse(LevelsTextbox.Text.ToString()));
+            this.TD.Servers = ServerListTextbox.Text.ToString();
+            td.DownloadToFolder(StringUtils.XyzTo012(UrlTextbox.Text.ToString()), FolderTextbox.Text.ToString(), int.Parse(MaxlevelsTextbox.Text.ToString()), int.Parse(MinlevelTextbox.Text.ToString()));
             td.DownloadFileTasks.OnCompletedCountAdded += DownloadFileTasks_OnCompletedCountAdded;
         }
 
         private void DownloadFileTasks_OnCompletedCountAdded(int lastestCount, int total)
         {
-
             DownloadProgressTextbox.Text = String.Format("{0} / {1}", lastestCount, total);
-
-            //string[] sizes = { "B", "KB", "MB", "GB", "TB" };
-            //double len = this.TD.DownloadFileTasks.DownloadedSize;
-            //int order = 0;
-            //while (len >= 1024 && order < sizes.Length - 1)
-            //{
-            //    order++;
-            //    len = len / 1024;
-            //}
-            //string result = String.Format("{0:0.##} {1}", len, sizes[order]);
             DownloadedSizeTextbox.Text = StringUtils.SizeToReadable(this.TD.DownloadFileTasks.DownloadedSize);
-
             double ratio = ((double)lastestCount / (double)total);
-
-
             EstimateSizeTextbox.Text = StringUtils.SizeToReadable((int)((double)TD.DownloadFileTasks.DownloadedSize / ratio)).ToString();
             AverageSizeTextblock.Text = StringUtils.SizeToReadable((long)(((double)(TD.DownloadFileTasks.DownloadedSize)) / ((double)lastestCount)));
             FailedCountTextblock.Text = TD.DownloadFileTasks.FailedCount.ToString();

@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetTiles", "GetTiles\GetTil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetTileUI", "GetTileUI\GetTileUI.csproj", "{42EBBB64-A29C-472E-BE47-2967B1BC5124}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PngTilesAddInfo", "PngTilesAddInfo\PngTilesAddInfo.csproj", "{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,18 @@ Global
 		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|x64.Build.0 = Release|Any CPU
 		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|x86.ActiveCfg = Release|Any CPU
 		{42EBBB64-A29C-472E-BE47-2967B1BC5124}.Release|x86.Build.0 = Release|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Debug|x64.Build.0 = Debug|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Debug|x86.Build.0 = Debug|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Release|x64.ActiveCfg = Release|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Release|x64.Build.0 = Release|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Release|x86.ActiveCfg = Release|Any CPU
+		{2889CCA9-8110-4D16-9AC8-F1F55DAF6068}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

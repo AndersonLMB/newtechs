@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="UrlTextbox" HorizontalAlignment="Left" Height="23" Margin="100,10,0,0" TextWrapping="Wrap" Text="http://t0.tianditu.com/DataServer?T=vec_w&amp;x={x}&amp;y={y}&amp;l={z}" VerticalAlignment="Top" Width="494" AutomationProperties.Name="UrlTextbox"/>
+        <TextBox x:Name="UrlTextbox" HorizontalAlignment="Left" Height="23" Margin="100,10,0,0" TextWrapping="Wrap" Text="http://t{s}.tianditu.com/DataServer?T=vec_w&amp;x={x}&amp;y={y}&amp;l={z}" VerticalAlignment="Top" Width="494" AutomationProperties.Name="UrlTextbox"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="URL" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="Wrap" Text="Folder" VerticalAlignment="Top"/>
-        <TextBox x:Name="FolderTextbox" HorizontalAlignment="Left" Height="23" Margin="100,50,0,0" TextWrapping="Wrap" Text="D:\test\tdt" VerticalAlignment="Top" Width="494" AutomationProperties.Name="FolderTextbox"/>
+        <TextBox x:Name="FolderTextbox" HorizontalAlignment="Left" Height="23" Margin="100,50,0,0" TextWrapping="Wrap" Text="C:\test\tdt" VerticalAlignment="Top" Width="494" AutomationProperties.Name="FolderTextbox"/>
         <Button x:Name="FolderSelectButton" Content="Folder" HorizontalAlignment="Left" Margin="619,50,0,0" VerticalAlignment="Top" Width="75" AutomationProperties.Name="FolderSelectButton"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="Levels" VerticalAlignment="Top"/>
-        <TextBox x:Name="LevelsTextbox" HorizontalAlignment="Left" Height="23" Margin="100,90,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="120" AutomationProperties.Name="LevelsTextbox"/>
+        <TextBox x:Name="MaxlevelsTextbox" HorizontalAlignment="Left" Height="23" Margin="474,92,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="120" AutomationProperties.Name="LevelsTextbox"/>
         <Button x:Name="___No_Name_" Content="Execute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="100,130,0,0" Click="Button_Click"/>
         <ProgressBar x:Name="DownloadProgressbar" HorizontalAlignment="Left" Height="20" Margin="100,170,0,0" VerticalAlignment="Top" Width="494"/>
         <TextBlock x:Name="DownloadProgressTextbox" HorizontalAlignment="Left" Margin="629,167,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
@@ -27,6 +27,8 @@
         <TextBlock x:Name="FailedCountTextblock" HorizontalAlignment="Left" Margin="100,263,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,283,0,0" TextWrapping="Wrap" Text="Time" VerticalAlignment="Top"/>
         <TextBlock x:Name="UsedTimeTextblock" HorizontalAlignment="Left" Margin="100,283,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBox x:Name="MinlevelTextbox" HorizontalAlignment="Left" Height="23" Margin="100,92,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="ServerListTextbox" HorizontalAlignment="Left" Height="23" Margin="619,12,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

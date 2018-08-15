@@ -8,6 +8,13 @@ namespace GetTiles
 {
     public class TileDownloader
     {
+
+        #region MyRegion
+        public DownloadFileTasks DownloadFileTasks { get; set; }
+        public string Servers { get; set; }
+        #endregion
+
+        #region Constructors
         public TileDownloader()
         {
             this.DownloadFileTasks = new DownloadFileTasks()
@@ -15,8 +22,11 @@ namespace GetTiles
                 TasksCount = 0,
                 TasksCompletedCount = 0
             };
+            Servers = "0";
             //this.DownloadFileTasks.OnCompletedCountAdded += DownloadFileTasks_OnCompletedCountAdded;
         }
+        #endregion
+
 
         private void DownloadFileTasks_OnCompletedCountAdded()
         {
@@ -31,7 +41,7 @@ namespace GetTiles
             //throw new NotImplementedException();
         }
 
-        public void DownloadToFolder(string url, string folder, int maxLevel)
+        public void DownloadToFolder(string url, string folder, int maxLevel, int minLevel)
         {
 
             Console.WriteLine("URL: {0}\nFolder: {1}\nLevel: {2}", url, folder, maxLevel);
@@ -47,7 +57,7 @@ namespace GetTiles
                 dir.Delete(true);
             }
 
-            for (var i = 1; i <= maxLevel; i++)
+            for (var i = minLevel; i <= maxLevel; i++)
             {
                 var levelDirectoryInfo = Directory.CreateDirectory(Path.Combine(di.FullName, String.Format("Z{0}", i)));
 
@@ -86,7 +96,12 @@ namespace GetTiles
             var size = Math.Pow(2, level);
             for (int i = 0; i < size; i++)
             {
-                var pngUrl = String.Format(url, i, y, level);
+                var serversSplit = Servers.Split(',');
+                int randomIndex = new Random().Next(0, serversSplit.Length);
+                var randomServer = serversSplit[randomIndex];
+
+
+                var pngUrl = String.Format(url, i, y, level, randomServer);
 
                 var pngFileName = String.Format("X{0}.png", i);
                 var pngFileFullname = Path.Combine(yDirectory, pngFileName);
@@ -103,7 +118,8 @@ namespace GetTiles
             DownloadFileTasks.AddTask(pngUrl, pngFileFullname);
         }
 
-        public DownloadFileTasks DownloadFileTasks { get; set; }
+
+
 
         //public List<DownloadFileTask> downloadFileTasks = new List<DownloadFileTask>();
 
@@ -152,8 +168,6 @@ namespace GetTiles
             };
             //WebClient webClient = new WebClient();
             task.Download();
-
-
         }
 
         public event CompletedCountAdd OnCompletedCountAdded;

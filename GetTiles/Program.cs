@@ -59,7 +59,7 @@ namespace GetTiles
                 }
                 Console.WriteLine();
                 var td = new TileDownloader();
-                td.DownloadToFolder(newUrlString, folderString, level);
+                td.DownloadToFolder(newUrlString, folderString, level ,1);
 
                 //a.Start();
 
