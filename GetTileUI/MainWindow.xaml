@@ -15,20 +15,25 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="Levels" VerticalAlignment="Top"/>
         <TextBox x:Name="MaxlevelsTextbox" HorizontalAlignment="Left" Height="23" Margin="474,92,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="120" AutomationProperties.Name="LevelsTextbox"/>
         <Button x:Name="___No_Name_" Content="Execute" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="100,130,0,0" Click="Button_Click"/>
-        <ProgressBar x:Name="DownloadProgressbar" HorizontalAlignment="Left" Height="20" Margin="100,170,0,0" VerticalAlignment="Top" Width="494"/>
-        <TextBlock x:Name="DownloadProgressTextbox" HorizontalAlignment="Left" Margin="629,167,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,203,0,0" TextWrapping="Wrap" Text="Downloaded " VerticalAlignment="Top"/>
-        <TextBlock x:Name="DownloadedSizeTextbox" HorizontalAlignment="Left" Margin="100,203,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,223,0,0" TextWrapping="Wrap" Text="EstimateSize" VerticalAlignment="Top"/>
-        <TextBlock x:Name="EstimateSizeTextbox" HorizontalAlignment="Left" Margin="100,223,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,243,0,0" TextWrapping="Wrap" Text="AverageSize" VerticalAlignment="Top"/>
-        <TextBlock x:Name="AverageSizeTextblock" HorizontalAlignment="Left" Margin="100,243,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,263,0,0" TextWrapping="Wrap" Text="Failed" VerticalAlignment="Top"/>
-        <TextBlock x:Name="FailedCountTextblock" HorizontalAlignment="Left" Margin="100,263,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,283,0,0" TextWrapping="Wrap" Text="Time" VerticalAlignment="Top"/>
-        <TextBlock x:Name="UsedTimeTextblock" HorizontalAlignment="Left" Margin="100,283,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <ProgressBar x:Name="DownloadProgressbar" HorizontalAlignment="Left" Height="20" Margin="90,203,0,0" VerticalAlignment="Top" Width="494"/>
+        <TextBlock x:Name="DownloadProgressTextbox" HorizontalAlignment="Left" Margin="619,200,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,314,0,0" TextWrapping="Wrap" Text="Downloaded " VerticalAlignment="Top"/>
+        <TextBlock x:Name="DownloadedSizeTextbox" HorizontalAlignment="Left" Margin="100,314,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,334,0,0" TextWrapping="Wrap" Text="EstimateSize" VerticalAlignment="Top"/>
+        <TextBlock x:Name="EstimateSizeTextbox" HorizontalAlignment="Left" Margin="100,334,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,354,0,0" TextWrapping="Wrap" Text="AverageSize" VerticalAlignment="Top"/>
+        <TextBlock x:Name="AverageSizeTextblock" HorizontalAlignment="Left" Margin="100,354,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,374,0,0" TextWrapping="Wrap" Text="Failed" VerticalAlignment="Top"/>
+        <TextBlock x:Name="FailedCountTextblock" HorizontalAlignment="Left" Margin="100,374,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,394,0,0" TextWrapping="Wrap" Text="Time" VerticalAlignment="Top"/>
+        <TextBlock x:Name="UsedTimeTextblock" HorizontalAlignment="Left" Margin="100,394,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
         <TextBox x:Name="MinlevelTextbox" HorizontalAlignment="Left" Height="23" Margin="100,92,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="ServerListTextbox" HorizontalAlignment="Left" Height="23" Margin="619,12,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox HorizontalAlignment="Left" Margin="100,165,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="LonLat"  HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="SphericalMercator" HorizontalAlignment="Left" Width="118"/>
+        </ComboBox>
+        <TextBlock x:Name="projTextblock" HorizontalAlignment="Left" Margin="10,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Text="Projection"/>
 
     </Grid>
 </Window>

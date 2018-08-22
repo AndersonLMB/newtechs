@@ -6,12 +6,48 @@ using System.Threading.Tasks;
 
 namespace GetTiles
 {
+
+    public static class Consts
+    {
+        public static List<double> GoogleScales = new List<double>() {
+            1128.497176,
+            2256.994353,
+            4513.988705,
+            9027.977411,
+            18055.954822,
+            36111.909643,
+            72223.819286,
+            144447.638572,
+            288895.277144,
+            577790.554289,
+            1155581.108577,
+            2311162.217155,
+            4622324.434309,
+            9244648.868618,
+            18489297.737236,
+            36978595.474472,
+            73957190.948944,
+            147914381.897889,
+            295828763.795777,
+            591657527.591555,
+       };
+
+
+    }
+
+    public enum Projection
+    {
+        LonLat, SphericalMercator
+    }
+
     public class TileDownloader
     {
 
-        #region MyRegion
+        #region Properties
         public DownloadFileTasks DownloadFileTasks { get; set; }
         public string Servers { get; set; }
+        public Extent Extent { get; set; }
+        public Projection Projection { get; set; }
         #endregion
 
         #region Constructors
@@ -23,9 +59,21 @@ namespace GetTiles
                 TasksCompletedCount = 0
             };
             Servers = "0";
+            this.Extent = new Extent()
+            {
+                xMin = -20026376.39,
+                yMin = -20048966.10,
+                xMax = 20026376.39,
+                yMax = 20048966.10
+            };
+            this.Projection = Projection.SphericalMercator;
+
             //this.DownloadFileTasks.OnCompletedCountAdded += DownloadFileTasks_OnCompletedCountAdded;
         }
         #endregion
+
+        #region Methods
+
 
 
         private void DownloadFileTasks_OnCompletedCountAdded()
@@ -34,13 +82,20 @@ namespace GetTiles
             Console.CursorTop -= 1;
             Console.CursorLeft = 0;
             Console.WriteLine("                        ");
-
             Console.CursorTop -= 1;
             Console.CursorLeft = 0;
             Console.WriteLine("{0} / {1}", DownloadFileTasks.TasksCompletedCount, DownloadFileTasks.TasksCount);
             //throw new NotImplementedException();
         }
 
+
+        /// <summary>
+        /// 所有下载
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="folder"></param>
+        /// <param name="maxLevel"></param>
+        /// <param name="minLevel"></param>
         public void DownloadToFolder(string url, string folder, int maxLevel, int minLevel)
         {
 
@@ -59,7 +114,7 @@ namespace GetTiles
 
             for (var i = minLevel; i <= maxLevel; i++)
             {
-                var levelDirectoryInfo = Directory.CreateDirectory(Path.Combine(di.FullName, String.Format("Z{0}", i)));
+                var levelDirectoryInfo = Directory.CreateDirectory(Path.Combine(di.FullName, String.Format("{0}", i)));
 
                 DownloadLevelToFolder(url, levelDirectoryInfo.FullName, i);
 
@@ -71,14 +126,20 @@ namespace GetTiles
 
         }
 
+        /// <summary>
+        /// 下载整个等级的
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="levelDirectory"></param>
+        /// <param name="level"></param>
         public void DownloadLevelToFolder(string url, string levelDirectory, int level)
         {
-            var size = Math.Pow(2, level);
+            var rowCount = Math.Pow(2, level);
             //each Y
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < rowCount; i++)
             {
                 var y = i;
-                var yDir = Directory.CreateDirectory(Path.Combine(levelDirectory, String.Format("Y{0}", i)));
+                var yDir = Directory.CreateDirectory(Path.Combine(levelDirectory, String.Format("{0}", i)));
 
                 DownloadRowToFolder(url, yDir.FullName, level, i);
             }
@@ -103,7 +164,7 @@ namespace GetTiles
 
                 var pngUrl = String.Format(url, i, y, level, randomServer);
 
-                var pngFileName = String.Format("X{0}.png", i);
+                var pngFileName = String.Format("{0}.png", i);
                 var pngFileFullname = Path.Combine(yDirectory, pngFileName);
 
                 DownloadToFile(pngUrl, pngFileFullname);
@@ -113,17 +174,30 @@ namespace GetTiles
             }
         }
 
+        /// <summary>
+        /// 将URL下载成文件
+        /// </summary>
+        /// <param name="pngUrl"></param>
+        /// <param name="pngFileFullname"></param>
         public void DownloadToFile(string pngUrl, string pngFileFullname)
         {
             DownloadFileTasks.AddTask(pngUrl, pngFileFullname);
         }
 
-
+        #endregion
 
 
         //public List<DownloadFileTask> downloadFileTasks = new List<DownloadFileTask>();
 
 
+    }
+
+    public class Extent
+    {
+        public double xMin { get; set; }
+        public double yMin { get; set; }
+        public double xMax { get; set; }
+        public double yMax { get; set; }
     }
 
     public class DownloadFileTasks
@@ -132,6 +206,8 @@ namespace GetTiles
         {
             this.DownloadedSize = 0;
             FailedCount = 0;
+
+
         }
 
 
