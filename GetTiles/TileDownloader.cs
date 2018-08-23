@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace GetTiles
 {
+    public static class TileDownloaderFactoryClass
+    {
+        public static TileDownloader CreateTileDownloader()
+        {
+            return new TileDownloader();
+        }
+    }
 
     public static class Consts
     {
-        public static List<double> GoogleScales = new List<double>() {
+        public static List<double> GoogleScalesReverse = new List<double>()
+        {
             1128.497176,
             2256.994353,
             4513.988705,
@@ -31,14 +39,35 @@ namespace GetTiles
             295828763.795777,
             591657527.591555,
        };
+        public static List<double> GoogleScales = new List<double>() {
+            591657527.591555,
+            295828763.795777,
+            147914381.897889,
+            73957190.948944,
+            36978595.474472,
+            18489297.737236,
+            9244648.868618,
+            4622324.434309,
+            2311162.217155,
+            1155581.108577,
+            577790.554289,
+            288895.277144,
+            144447.638572,
+            72223.819286,
+            36111.909643,
+            18055.954822,
+            9027.977411,
+            4513.988705,
+            2256.994353,
+            1128.497176,
+       };
+
+
 
 
     }
 
-    public enum Projection
-    {
-        LonLat, SphericalMercator
-    }
+
 
     public class TileDownloader
     {
@@ -46,7 +75,7 @@ namespace GetTiles
         #region Properties
         public DownloadFileTasks DownloadFileTasks { get; set; }
         public string Servers { get; set; }
-        public Extent Extent { get; set; }
+        public DoubleExtent Extent { get; set; }
         public Projection Projection { get; set; }
         #endregion
 
@@ -59,14 +88,14 @@ namespace GetTiles
                 TasksCompletedCount = 0
             };
             Servers = "0";
-            this.Extent = new Extent()
+            this.Extent = new DoubleExtent()
             {
                 xMin = -20026376.39,
                 yMin = -20048966.10,
                 xMax = 20026376.39,
                 yMax = 20048966.10
             };
-            this.Projection = Projection.SphericalMercator;
+            this.Projection = Projection.WebMercator;
 
             //this.DownloadFileTasks.OnCompletedCountAdded += DownloadFileTasks_OnCompletedCountAdded;
         }
@@ -192,23 +221,60 @@ namespace GetTiles
 
     }
 
-    public class Extent
+    public interface IExtent
+    {
+        string ExtentToString();
+    }
+
+    public class DoubleExtent : IExtent
     {
         public double xMin { get; set; }
         public double yMin { get; set; }
         public double xMax { get; set; }
         public double yMax { get; set; }
+
+        public string ExtentToString()
+        {
+            return String.Format("xMin:{0:F12} yMin:{1:F12} xMax{2:F12} yMax{3:F12}", xMin, yMin, xMax, yMax);
+        }
+    }
+
+    public class IntegerExtent : IExtent
+    {
+        public int xMin { get; set; }
+        public int yMin { get; set; }
+        public int xMax { get; set; }
+        public int yMax { get; set; }
+        public string ExtentToString()
+        {
+            return String.Format("xMin:{0} yMin:{1} xMax{2} yMax{3}", xMin, yMin, xMax, yMax);
+        }
+
+        public override string ToString()
+        {
+            return this.ExtentToString();
+        }
     }
 
     public class DownloadFileTasks
     {
+
+        #region Methods
         public DownloadFileTasks()
         {
             this.DownloadedSize = 0;
             FailedCount = 0;
-
-
         }
+        public int TasksCompletedCount
+        {
+            get { return _tasksCompletedCount; }
+            set
+            {
+                OnCompletedCountAdded?.Invoke(value, TasksCount);
+                _tasksCompletedCount = value;
+            }
+        }
+        #endregion
 
 
         /// <summary>
@@ -220,15 +286,7 @@ namespace GetTiles
         /// </summary>
         private int _tasksCompletedCount = 0;
 
-        public int TasksCompletedCount
-        {
-            get { return _tasksCompletedCount; }
-            set
-            {
-                OnCompletedCountAdded?.Invoke(value, TasksCount);
-                _tasksCompletedCount = value;
-            }
-        }
+
 
         public long DownloadedSize { get; set; }
         public int FailedCount { get; set; }
@@ -255,6 +313,7 @@ namespace GetTiles
 
     public class DownloadFileTask
     {
+        public int MaxFailedLimit { get; set; }
         public int Status { get; set; }
         public string PngUrl { get; set; }
         public string PngFileFullname { get; set; }
@@ -266,6 +325,11 @@ namespace GetTiles
             webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
         }
 
+        public DownloadFileTask()
+        {
+            MaxFailedLimit = 2;
+        }
+
         private void WebClient_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             //Console.WriteLine((sender as WebClient).BaseAddress);
@@ -274,7 +338,10 @@ namespace GetTiles
                 Console.WriteLine("下载失败");
                 Tasks.FailedCount += 1;
                 // 下载失败
-                Download();
+                if (Tasks.FailedCount <= MaxFailedLimit)
+                {
+                    Download();
+                }
             }
 
             else
@@ -296,7 +363,5 @@ namespace GetTiles
             //throw new NotImplementedException();
         }
     }
-
-
 }
 
