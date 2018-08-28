@@ -53,7 +53,10 @@ namespace GetTiles
         #endregion
 
         #region Constructors
-
+        public TileDownloader2()
+        {
+            this.TileDownloaderTasksManager = new TileDownloaderTasksManager();
+        }
         #endregion
 
         #region Methods
@@ -206,18 +209,21 @@ namespace GetTiles
                         //var server = "0";
                         //var url = String.Format(this.UrlTemplate, z, y, x, server);
                         Trace.WriteLine(url);
-
-
-
-
-
+                        this.TileDownloaderTasksManager.AddTask(url, xFileFullName);
                     }
                 }
             }
-
-
+            if (this.OnTileDownloadTasksAllCreated != null)
+            {
+                this.OnTileDownloadTasksAllCreated(this, this.TileDownloaderTasksManager);
+            }
+            Trace.WriteLine(TileDownloaderTasksManager.TileDownloaderTasks.Count);
             //切片的索引范围
         }
+
+        public event TileDownloadTaskAllCreatedDelegate OnTileDownloadTasksAllCreated;
+
+
 
         public IntegerExtent CalculateTileIndexesExtent(double resolution)
         {
@@ -245,6 +251,8 @@ namespace GetTiles
         }
         #endregion
     }
+
+    public delegate void TileDownloadTaskAllCreatedDelegate(TileDownloader2 tileDownloader, TileDownloaderTasksManager manager);
 
     public struct CoordinateDouble
     {

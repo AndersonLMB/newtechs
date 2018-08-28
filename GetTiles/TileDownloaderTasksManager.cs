@@ -10,7 +10,22 @@ namespace GetTiles
 {
     public class TileDownloaderTasksManager
     {
+        #region Properties     
+        public List<TileDownloaderTask> TileDownloaderTasks { get => tileDownloaderTasks; set => tileDownloaderTasks = value; }
+        #endregion
+
+        #region Constructors
+        public TileDownloaderTasksManager()
+        {
+            TileDownloaderTasks = new List<TileDownloaderTask>();
+        }
+        #endregion
+
+
         private List<TileDownloaderTask> tileDownloaderTasks;
+
+
+
         public void Sth()
         {
 
@@ -18,8 +33,13 @@ namespace GetTiles
 
         public TileDownloaderTask AddTask(string url, string filename)
         {
-
-            return null;
+            var downloadTask = new TileDownloaderTask()
+            {
+                Url = url,
+                Filename = filename
+            };
+            TileDownloaderTasks.Add(downloadTask);
+            return downloadTask;
         }
 
         private void AddTask(TileDownloaderTask tileDownloaderTask)

@@ -75,8 +75,18 @@ namespace GetTileUI
             //    xMax = 11374899,
             //    yMax = 3104145
             //};
+            td2.OnTileDownloadTasksAllCreated += Td2_OnTileDownloadTasksAllCreated;
             td2.TilesDownloadExtent = new DoubleExtent(ExtentInputTextBox.Text);
             td2.DownloadByResolutionIndexRange(Convert.ToInt32(MinzoomInputTextBox.Text), Convert.ToInt32(MaxzoomInputTextBox.Text), false);
+
+
+        }
+
+        private void Td2_OnTileDownloadTasksAllCreated(TileDownloader2 tileDownloader, TileDownloaderTasksManager manager)
+        {
+            TileDownloadTaskManagerDataGrid.ItemsSource = manager.TileDownloaderTasks;
+            //TileDownloadTaskManagerListView.ItemsSource
+            //throw new NotImplementedException();
         }
     }
 }

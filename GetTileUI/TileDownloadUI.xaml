@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GetTileUI"
         mc:Ignorable="d"
-        Title="TileDownloadUI" Height="450" Width="800"  MinWidth="800">
+        Title="TileDownloadUI" Height="600" Width="800"  MinWidth="800">
     <Grid>
         <StackPanel Orientation="Vertical"  >
             <StackPanel Orientation="Horizontal" Height="40" >
@@ -38,6 +38,7 @@
             <StackPanel Orientation="Horizontal" Height="40" Margin="100,0,0,0" >
                 <Button x:Name="ConfirmButton"  Content="Confirm" FontSize="14"  MinWidth="100" Height="28" Click="ConfirmButton_Click"  />
             </StackPanel>
+            <DataGrid x:Name="TileDownloadTaskManagerDataGrid" Height="300"/>
 
         </StackPanel>
     </Grid>
