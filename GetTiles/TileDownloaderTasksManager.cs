@@ -74,13 +74,14 @@ namespace GetTiles
         public int MaxDownloadLimit { get; set; }
         public WebClient WebClient { get; set; }
         public bool NotTryDownloadYet { get; set; }
+        public long Size { get; set; }
 
         #endregion
 
         #region Methods
         public Task TryDownload()
         {
-            
+
             //TryDownloadActivated = true;
             if (OnDownloadTaskFirstStartDownload != null)
             {
@@ -124,6 +125,9 @@ namespace GetTiles
             {
                 if (OnDownloadTaskFinallyDownload != null)
                 {
+                    var fi = new FileInfo(Filename);
+                    var size = fi.Length;
+                    this.Size = size;
                     OnDownloadTaskFinallyDownload(this, "SUCCESS");
                 }
             }

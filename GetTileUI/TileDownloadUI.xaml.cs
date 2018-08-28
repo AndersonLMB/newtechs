@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Forms;
+﻿using GetTiles;
+using System;
 using System.IO;
-using GetTiles;
-using System.Diagnostics;
+using System.Windows;
+using System.Windows.Forms;
 
 namespace GetTileUI
 {
@@ -23,6 +12,8 @@ namespace GetTileUI
     public partial class TileDownloadUI : Window
     {
         public TileDownloaderTasksManager Manager { get; set; }
+        public int TaskTotalCount { get; set; }
+        public long DownloadedSize { get; set; }
 
         public TileDownloadUI()
         {
@@ -33,6 +24,7 @@ namespace GetTileUI
                 Directory.CreateDirectory(directoryPath);
             }
             FolderDirectoryInputTextBox.Text = directoryPath;
+            DownloadedSize = 0;
         }
 
         private void FolderSelectButton_Click(object sender, RoutedEventArgs e)
@@ -92,38 +84,38 @@ namespace GetTileUI
 
         private void Td2_OnTileDownloadTasksAllCreated(TileDownloader2 tileDownloader, TileDownloaderTasksManager manager)
         {
+
             Manager = manager;
             //TileDownloadTaskManagerDataGrid.ItemsSource = manager.TileDownloaderTasks;
+            TaskTotalCount = Manager.TileDownloaderTasks.Count;
             TileDownloadTaskManagerListView.ItemsSource = manager.TileDownloaderTasks;
-            #region MyRegion
-            //manager.TileDownloaderTasks.ForEach((a) =>
-            //{
-            //    a.OnDownloadTaskFinallyDownload += (b, c) =>
-            //    {
-            //        manager.TileDownloaderTasks.Remove(a);
-            //        //TileDownloadTaskManagerListView.ItemsSource = manager.TileDownloaderTasks;
-            //        TileDownloadTaskManagerListView.Items.Refresh();
-            //    };
+            DownloadProgressbar.Maximum = TaskTotalCount;
 
-            //    a.OnDownloadTaskFirstStartDownload += (d) =>
-            //    {
-            //        d.NotTryDownloadYet = true;
-            //    };
-            //});
+            ProgressTextblock.Text = String.Format("{0} / {1}", 0, TaskTotalCount);
 
-            //TileDownloadTaskManagerListView.ItemsSource
-            //throw new NotImplementedException();
-            #endregion
-
-            manager.TileDownloaderTasks.ForEach(EachTileDownloaderTaskCreatedExecute);
+            manager.TileDownloaderTasks.ForEach((a) =>
+            {
+                a.OnDownloadTaskFinallyDownload += (b, c) =>
+                {
+                    Manager.TileDownloaderTasks.Remove(a);
+                    TileDownloadTaskManagerListView.ItemsSource = Manager.TileDownloaderTasks;
+                    TileDownloadTaskManagerListView.Items.Refresh();
+                    var downloadedCount = TaskTotalCount - Manager.TileDownloaderTasks.Count;
+                    ProgressTextblock.Text = String.Format("{0} / {1}", downloadedCount, TaskTotalCount);
+                    DownloadProgressbar.Value = downloadedCount;
+                    //DownloadedSize 
+                    DownloadedSize += a.Size;
+                    DownloadSizeTextblock.Text = StringUtils.SizeToReadable(DownloadedSize).ToString();
+                    var estimateSize = ((double)DownloadedSize) / ((double)downloadedCount / (double)TaskTotalCount);
+                    EstimatedSizeTextblock.Text = StringUtils.SizeToReadable(Convert.ToInt64(estimateSize));
+                    //EstimatedSizeTextblock.Text =    
+                };
+            });
+            //manager.TileDownloaderTasks.ForEach(EachTileDownloaderTaskCreatedExecute);
         }
 
         private void EachTileDownloaderTaskCreatedExecute(TileDownloaderTask a)
         {
-            a.OnDownloadTaskFirstStartDownload += (d) =>
-            {
-                //d.NotTryDownloadYet = true;
-            };
             a.OnDownloadTaskFinallyDownload += (b, c) =>
             {
                 Manager.TileDownloaderTasks.Remove(a);
@@ -167,6 +159,17 @@ namespace GetTileUI
 
 
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var button = sender as System.Windows.Controls.Button;
+            var downloaderTask = button.DataContext as TileDownloaderTask;
+            //System.Windows.Forms.MessageBox.Show(downloaderTask.Url);
+
+            System.Diagnostics.Process.Start(downloaderTask.Url);
+            //var task = downloaderTask.TryDownload();
+            //button.IsEnabled = false;
         }
     }
 }
