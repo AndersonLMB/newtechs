@@ -38,19 +38,35 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="40" Margin="100,0,0,0" >
                 <Button x:Name="ConfirmButton"  Content="Confirm" FontSize="14"  MinWidth="100" Height="28" Click="ConfirmButton_Click"  />
+                <Button x:Name="DownloadAllButton"  Content="DownloadAll" FontSize="14"  MinWidth="100" Height="28" Click="DownloadAllButton_Click" Margin="10,0,0,0"  />
             </StackPanel>
-            <DataGrid  x:Name="TileDownloadTaskManagerDataGrid" Height="142"/>
+            <!--<DataGrid  x:Name="TileDownloadTaskManagerDataGrid" Height="142"/>-->
             <StackPanel Orientation="Vertical">
             </StackPanel>
-            <ListView  x:Name="TileDownloadTaskManagerListView"  Height="150">
-                <ListView.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type gt:TileDownloaderTask}" >
-                        <TextBlock  Text="{Binding Path=Url}"></TextBlock>
-                    </HierarchicalDataTemplate>
-                </ListView.Resources>
-                <!--<ListViewItem Content="ListViewItem"/>-->
+            <StackPanel>
+                <ListView   x:Name="TileDownloadTaskManagerListView" MinHeight="150" MaxHeight="500">
+                    <ListView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type gt:TileDownloaderTask}" >
+                            <StackPanel Orientation="Horizontal">
+                                <!--<StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Path=Index}" Width="30" Margin="5,5,5,5"></TextBlock>
+                                </StackPanel>-->
+                                <Button IsEnabled="{Binding Path=NotTryDownloadYet}" Click="Button_Click" Content="Download" Width="50"></Button>
+                                <StackPanel Orientation="Vertical" MaxWidth="400">
+                                    <TextBox Text="{Binding Path=Url}"  Margin="10,0,0,0"></TextBox>
+                                    <TextBox Text="{Binding Path=Filename}" Margin="10,0,0,0"></TextBox>
+                                </StackPanel>
+                                <!--<StackPanel>
+                                <ProgressBar></ProgressBar>
+                            </StackPanel>-->
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </ListView.Resources>
+                    <!--<ListViewItem Content="ListViewItem"/>-->
 
-            </ListView>
+                </ListView>
+            </StackPanel>
+
         </StackPanel>
     </Grid>
 </Window>

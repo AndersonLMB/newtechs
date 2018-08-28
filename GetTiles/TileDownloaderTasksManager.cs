@@ -36,9 +36,11 @@ namespace GetTiles
             var downloadTask = new TileDownloaderTask()
             {
                 Url = url,
-                Filename = filename
+                Filename = filename,
+                TileDownloaderTasksManager = this
             };
             TileDownloaderTasks.Add(downloadTask);
+            //downloadTask.Index = TileDownloaderTasks.IndexOf(downloadTask);
             return downloadTask;
         }
 
@@ -57,31 +59,43 @@ namespace GetTiles
         {
             MaxDownloadLimit = 2;
             DownloadedCount = 0;
+            NotTryDownloadYet = true;
         }
         #endregion
 
 
         #region Properties
+        public static int TotalCount { get; set; }
+        public int Index { get; set; }
         public string Url { get; set; }
         public string Filename { get; set; }
         public TileDownloaderTasksManager TileDownloaderTasksManager { get; set; }
         public int DownloadedCount { get; set; }
         public int MaxDownloadLimit { get; set; }
+        public WebClient WebClient { get; set; }
+        public bool NotTryDownloadYet { get; set; }
 
         #endregion
 
         #region Methods
         public Task TryDownload()
         {
+            
+            //TryDownloadActivated = true;
+            if (OnDownloadTaskFirstStartDownload != null)
+            {
+                OnDownloadTaskFirstStartDownload(this);
+            }
+            NotTryDownloadYet = false;
             if (File.Exists(Filename))
             {
                 File.Delete(Filename);
             }
-            WebClient webClient = new WebClient();
+            this.WebClient = new WebClient();
             //var task = webClient.DownloadFileTaskAsync(Url, Filename);
             //task.Wait()
-            webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
-            var task = webClient.DownloadFileTaskAsync(new Uri(Url), Filename);
+            this.WebClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
+            var task = this.WebClient.DownloadFileTaskAsync(new Uri(Url), Filename);
             //Trace.WriteLine(task.Id);
             return task;
         }
@@ -119,10 +133,11 @@ namespace GetTiles
         #endregion
 
         public event DownloadTaskFinallyDownloadedDelegate OnDownloadTaskFinallyDownload;
+        public event DownloadTaskFirstStartDownloadDelegate OnDownloadTaskFirstStartDownload;
     }
 
     public delegate void DownloadTaskFinallyDownloadedDelegate(TileDownloaderTask tileDownloaderTask, string message);
-
+    public delegate void DownloadTaskFirstStartDownloadDelegate(TileDownloaderTask tileDownloaderTask);
     public class DownloadTaskFinallyDownloadedObject
     {
 
