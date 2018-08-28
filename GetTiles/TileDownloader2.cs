@@ -5,15 +5,8 @@ using System.IO;
 
 namespace GetTiles
 {
-    public class TileDownloaderTasksManager
-    {
 
-    }
 
-    public class TileDownloaderTask
-    {
-
-    }
 
     public class TileDownloader2
     {
@@ -23,6 +16,8 @@ namespace GetTiles
         private Projection projectionType;
         private string urlTemplate;
         private string downloadFolder;
+        private string servers;
+        private TileDownloaderTasksManager tileDownloaderTasksManager;
         /// <summary>
         /// 坐标原点
         /// </summary>
@@ -52,6 +47,8 @@ namespace GetTiles
         /// </summary>
         public string UrlTemplate { get => urlTemplate; set => urlTemplate = value; }
         public string DownloadFolderPath { get => downloadFolder; set => downloadFolder = value; }
+        public string Servers { get => servers; set => servers = value; }
+        public TileDownloaderTasksManager TileDownloaderTasksManager { get => tileDownloaderTasksManager; set => tileDownloaderTasksManager = value; }
 
         #endregion
 
@@ -106,9 +103,6 @@ namespace GetTiles
             return output;
         }
 
-
-
-
         /// <summary>
         /// 根据分辨率索引范围下载
         /// </summary>
@@ -132,6 +126,11 @@ namespace GetTiles
             DownloadLevelByResolution(resolution, resolutionIndex, createFolders);
         }
 
+        /// <summary>
+        /// 根据分辨率下载整个等级
+        /// </summary>
+        /// <param name="resolution"></param>
+        /// <param name="z"></param>
         public void DownloadLevelByResolution(double resolution, int z)
         {
 
@@ -152,7 +151,7 @@ namespace GetTiles
                 for (int x = indexExtent.xMin; x <= indexExtent.xMax; x++)
                 {
                     var xFileFullName = Path.Combine(yDirectoryPath, String.Format("{0}.png", x.ToString()));
-                    var server = "0";
+                    var server = GetRandomServerIndex();
                     var url = String.Format(this.UrlTemplate, z, y, x, server);
                     Trace.WriteLine(url);
                     //Trace.WriteLine(String.Format("Z:{0} Y:{1} X:{2}", z, y, x));
@@ -162,7 +161,12 @@ namespace GetTiles
             //切片的索引范围
         }
 
-
+        /// <summary>
+        /// 根据分辨率下载整个等级
+        /// </summary>
+        /// <param name="resolution"></param>
+        /// <param name="z"></param>
+        /// <param name="createFolders"></param>
         public void DownloadLevelByResolution(double resolution, int z, bool createFolders)
         {
             AbsFloorExtent();
@@ -180,7 +184,7 @@ namespace GetTiles
                     for (int x = indexExtent.xMin; x <= indexExtent.xMax; x++)
                     {
                         var xFileFullName = Path.Combine(yDirectoryPath, String.Format("{0}.png", x.ToString()));
-                        var server = "0";
+                        var server = GetRandomServerIndex();
                         var url = String.Format(this.UrlTemplate, z, y, x, server);
                         Trace.WriteLine(url);
                     }
@@ -194,7 +198,7 @@ namespace GetTiles
 
                     for (int x = indexExtent.xMin; x <= indexExtent.xMax; x++)
                     {
-                        var server = "1";
+                        var server = GetRandomServerIndex();
                         var xFileFullName = Path.Combine(DownloadFolderPath, String.Format("Z{0}_Y{1}_X{2}.png", z, y, x));
                         Trace.WriteLine(xFileFullName);
                         var url = String.Format(this.UrlTemplate, z, y, x, server);
@@ -202,6 +206,11 @@ namespace GetTiles
                         //var server = "0";
                         //var url = String.Format(this.UrlTemplate, z, y, x, server);
                         Trace.WriteLine(url);
+
+
+
+
+
                     }
                 }
             }
@@ -209,7 +218,6 @@ namespace GetTiles
 
             //切片的索引范围
         }
-
 
         public IntegerExtent CalculateTileIndexesExtent(double resolution)
         {
@@ -219,11 +227,21 @@ namespace GetTiles
             tileIndexesExtent.yMin = (int)Math.Floor(-(TilesDownloadExtent.yMax - Origin.Y) / (this.TileSize.Height * resolution));
             tileIndexesExtent.xMax = (int)Math.Floor((TilesDownloadExtent.xMax - Origin.X) / (this.TileSize.Width * resolution));
             tileIndexesExtent.yMax = (int)Math.Floor(-(TilesDownloadExtent.yMin - Origin.Y) / (this.TileSize.Height * resolution));
-
-
-
-
             return tileIndexesExtent;
+        }
+
+        private string GetRandomServerIndex()
+        {
+            var split = Servers.Split(',');
+            if (split.Length == 0)
+            {
+                return Servers;
+            }
+            else
+            {
+                var randomIndex = new Random().Next(0, split.Length);
+                return split[randomIndex];
+            }
         }
         #endregion
     }

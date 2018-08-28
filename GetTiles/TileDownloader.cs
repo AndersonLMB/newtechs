@@ -228,6 +228,52 @@ namespace GetTiles
 
     public class DoubleExtent : IExtent
     {
+        public double this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0: return this.xMin;
+                    case 1: return this.yMin;
+                    case 2: return this.xMax;
+                    case 3: return this.yMax;
+                    default: return 0;
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0: this.xMin = value; break;
+                    case 1: this.yMin = value; break;
+                    case 2: this.xMax = value; break;
+                    case 3: this.yMax = value; break;
+                    default: break;
+                }
+            }
+        }
+
+        public DoubleExtent() { }
+
+        public DoubleExtent(double xMin, double yMin, double xMax, double yMax)
+        {
+            this.xMin = xMin;
+            this.yMin = yMin;
+            this.xMax = xMax;
+            this.yMax = yMax;
+        }
+        public DoubleExtent(string extentDoubleString)
+        {
+            var split = extentDoubleString.Split(',');
+            for (int i = 0; i < 4; i++)
+            {
+                this[i] = Convert.ToDouble(split[i]);
+            }
+            //xMin =   Double.TryParse( split[0];
+
+        }
+
         public double xMin { get; set; }
         public double yMin { get; set; }
         public double xMax { get; set; }

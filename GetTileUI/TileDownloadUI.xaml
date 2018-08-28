@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GetTileUI"
         mc:Ignorable="d"
-        Title="TileDownloadUI" Height="450" Width="800">
+        Title="TileDownloadUI" Height="450" Width="800"  MinWidth="800">
     <Grid>
-        
+        <StackPanel Orientation="Vertical"  >
+            <StackPanel Orientation="Horizontal" Height="40" >
+                <Label Content="URL" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
+                <TextBox x:Name="UrlInputTextBox" Width="500" FontSize="14" VerticalAlignment="Center" Text="http://t0.tianditu.com/DataServer?T=vec_w&amp;x={2}&amp;y={1}&amp;l={0}"  ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="40" >
+                <Label Content="Servers" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
+                <TextBox x:Name="ServersInputTextBox"  Width="500" FontSize="14" VerticalAlignment="Center" Text="0" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="40" >
+                <Label Content="Extent" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
+                <TextBox x:Name="ExtentInputTextBox"  Width="500" FontSize="14" VerticalAlignment="Center" Text="11304730.735264424, 3049264.1508663935, 11362364.254591448, 3093062.5680737994" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="40" >
+                <Label Content="Zooms" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Min" FontSize="14" VerticalAlignment="Center" ></Label>
+                    <TextBox x:Name="MinzoomInputTextBox"  Width="100" FontSize="14" VerticalAlignment="Center" Text="13" ></TextBox>
+                    <Label Content="Max" FontSize="14" VerticalAlignment="Center" ></Label>
+                    <TextBox x:Name="MaxzoomInputTextBox"  Width="100" FontSize="14" VerticalAlignment="Center" Text="13" ></TextBox>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="40" >
+                <Label Content="Directory" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
+                <TextBox x:Name="FolderDirectoryInputTextBox" Width="500" FontSize="14" VerticalAlignment="Center" Text="C:\test\pzhtdt" ></TextBox>
+                <Button x:Name="FolderSelectButton" Content="Select"  FontSize="14"  MinWidth="100" Height="28" Click="FolderSelectButton_Click"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="40" Margin="100,0,0,0" >
+                <Button x:Name="ConfirmButton"  Content="Confirm" FontSize="14"  MinWidth="100" Height="28" Click="ConfirmButton_Click"  />
+            </StackPanel>
+
+        </StackPanel>
     </Grid>
 </Window>

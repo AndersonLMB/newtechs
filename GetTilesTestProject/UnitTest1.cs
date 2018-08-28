@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace GetTilesTestProject
 {
@@ -124,7 +125,8 @@ namespace GetTilesTestProject
             var td2 = new TileDownloader2();
             td2.CommonInit();
             td2.DownloadFolderPath = @"C:\test\td2";
-            td2.UrlTemplate = "http://t0.tianditu.com/DataServer?T=vec_w&x={2}&y={1}&l={0}";
+            td2.UrlTemplate = "http://t{3}.tianditu.com/DataServer?T=vec_w&x={2}&y={1}&l={0}";
+            td2.Servers = "0,1,2,3,4";
             var di = new DirectoryInfo(td2.DownloadFolderPath);
             foreach (var file in di.EnumerateFiles())
             {
@@ -142,15 +144,15 @@ namespace GetTilesTestProject
 
             //11288373.211211396, 3039098.0261044647, 11374899.927230217, 3104145.9371751496
             //11304730.735264424, 3049264.1508663935, 11362364.254591448, 3093062.5680737994
-            td2.TilesDownloadExtent = new DoubleExtent()
-            {
-                xMin = 11288373,
-                yMin = 3039098,
-                xMax = 11374899,
-                yMax = 3104145
-            };
+            //td2.TilesDownloadExtent = new DoubleExtent()
+            //{
+            //    xMin = 11288373,
+            //    yMin = 3039098,
+            //    xMax = 11374899,
+            //    yMax = 3104145
+            //};
+            td2.TilesDownloadExtent = new DoubleExtent(11304730.735264424, 3049264.1508663935, 11362364.254591448, 3093062.5680737994);
             td2.DownloadByResolutionIndexRange(11, 17, false);
-
         }
 
 
@@ -163,4 +165,27 @@ namespace GetTilesTestProject
         }
     }
 
+    [TestClass]
+    public class DownloadTaskManagerTests
+    {
+        [TestMethod]
+        public void SingleDownloadTaskTest()
+        {
+
+            TileDownloaderTask downloadTask = new TileDownloaderTask()
+            {
+                //C:\test\td2\Z16_Y27740_X51324.png
+                //http://t2.tianditu.com/DataServer?T=vec_w&x=51324&y=27740&l=16
+                Url = "http://t2.tianditu.com/DataServer?T=vec_w&x=51324&y=27740&l=16",
+                Filename = @"C:\test\td2\Z16_Y27740_X51324.png"
+            };
+            downloadTask.OnDownloadTaskFinallyDownload += (a, b) =>
+            {
+                Trace.WriteLine(String.Format("{0} => {1}", a.Url, a.Filename));
+                Trace.WriteLine(b);
+            };
+            var task = downloadTask.TryDownload();
+            task.Wait();
+        }
+    }
 }
