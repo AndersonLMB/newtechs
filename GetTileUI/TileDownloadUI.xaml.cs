@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.IO;
 using GetTiles;
@@ -25,6 +24,12 @@ namespace GetTileUI
         public TileDownloadUI()
         {
             InitializeComponent();
+            var directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "pzhtdt");
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            FolderDirectoryInputTextBox.Text = directoryPath;
         }
 
         private void FolderSelectButton_Click(object sender, RoutedEventArgs e)
@@ -85,6 +90,7 @@ namespace GetTileUI
         private void Td2_OnTileDownloadTasksAllCreated(TileDownloader2 tileDownloader, TileDownloaderTasksManager manager)
         {
             TileDownloadTaskManagerDataGrid.ItemsSource = manager.TileDownloaderTasks;
+            TileDownloadTaskManagerListView.ItemsSource = manager.TileDownloaderTasks;
             //TileDownloadTaskManagerListView.ItemsSource
             //throw new NotImplementedException();
         }
