@@ -156,7 +156,8 @@ namespace GetTileUI
             {
                 a.TryDownload();
             });
-
+            ConfirmButton.IsEnabled = false;
+            DownloadAllButton.IsEnabled = false;
 
 
         }
