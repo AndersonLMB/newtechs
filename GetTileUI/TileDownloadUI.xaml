@@ -6,21 +6,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GetTileUI"
         mc:Ignorable="d"
-        Title="TileDownloadUI" Height="600" Width="800"  MinWidth="800">
+        Title="TileDownloadUI" Height="700" Width="800"  MinWidth="800">
     <Grid>
         <StackPanel Orientation="Vertical"  >
             <StackPanel Orientation="Horizontal" Height="40" >
                 <Label Content="URL" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
                 <TextBox x:Name="UrlInputTextBox" Width="500" FontSize="14" VerticalAlignment="Center" Text="http://t0.tianditu.com/DataServer?T=vec_w&amp;x={2}&amp;y={1}&amp;l={0}"  ></TextBox>
+                <!--<TextBlock Text="Projection" FontSize="15" VerticalAlignment="Center"></TextBlock>-->
+                <ComboBox x:Name="ProjectionSelect" SelectedIndex="0"  Height="25" Margin="20,0,0,0" Width="150" >
+                    <ComboBoxItem x:Name="WebMctCbi" Content="Spherical Mercator"></ComboBoxItem>
+                    <ComboBoxItem x:Name="LonLatCbi" Content="Longitude&amp;Latitude"></ComboBoxItem>
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="40" >
                 <Label Content="Servers" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
                 <TextBox x:Name="ServersInputTextBox"  Width="500" FontSize="14" VerticalAlignment="Center" Text="0" ></TextBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="40" >
-                <Label Content="Extent" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
-                <TextBox x:Name="ExtentInputTextBox"  Width="500" FontSize="14" VerticalAlignment="Center" Text="11304730.735264424, 3049264.1508663935, 11362364.254591448, 3093062.5680737994" ></TextBox>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Height="40" >
+                    <Label Content="Extent" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
+                    <TextBox x:Name="ExtentInputTextBox"  Width="500" FontSize="14" VerticalAlignment="Center" Text="11304730.735264424, 3049264.1508663935, 11362364.254591448, 3093062.5680737994" ></TextBox>
+
+                </StackPanel>
+                <StackPanel  Orientation="Horizontal" Height="40">
+                    <TextBlock Height="36" Text="Administrative Area" Width="100" Margin="100,0,0,0" TextWrapping="Wrap" FontSize="12" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
+                    <TextBox x:Name="TrySearchAdmAreaName" Margin="10 ,0,0,0" Width="150" Height="30" FontSize="14" Text="攀枝花"></TextBox>
+                    <Button  x:Name="TrySearchButton" Click="TrySearchButton_Click" Margin="10,0,0,0" Width="150" Height="40">
+                        <TextBlock TextWrapping="Wrap" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center"><Run Text="TrySearch"/><LineBreak/><Run Text="(Using Tianditu API)"/></TextBlock>
+                    </Button>
+                </StackPanel>
             </StackPanel>
+
             <StackPanel Orientation="Horizontal" Height="40" >
                 <Label Content="Zooms" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
                 <StackPanel Orientation="Horizontal">
@@ -33,15 +49,18 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="40" >
                 <Label Content="Directory" FontSize="14" VerticalAlignment="Center"  MinWidth="100"></Label>
-                <TextBox x:Name="FolderDirectoryInputTextBox" Width="500" FontSize="14" VerticalAlignment="Center" Text="D:\test\pzhtdt" ></TextBox>
+                <TextBox x:Name="FolderDirectoryInputTextBox" Width="400" FontSize="14" VerticalAlignment="Center" Text="D:\test\pzhtdt" ></TextBox>
                 <Button x:Name="FolderSelectButton" Content="Select"  FontSize="14"  MinWidth="100" Height="28" Click="FolderSelectButton_Click"></Button>
+                <CheckBox VerticalAlignment="Center" x:Name="BoolCreateDirectory" IsChecked="False" >
+                    <TextBlock Text="Create Directory"></TextBlock>
+                </CheckBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="40" Margin="100,0,0,0" >
                 <Button x:Name="ConfirmButton"  Content="Confirm" FontSize="14"  MinWidth="100" Height="28" Click="ConfirmButton_Click"  />
                 <Button x:Name="DownloadAllButton"  Content="DownloadAll" FontSize="14"  MinWidth="100" Height="28" Click="DownloadAllButton_Click" Margin="10,0,0,0"  />
-                <StackPanel Margin="10,0,0,0" Width="400" Orientation="Horizontal">
+                <StackPanel Margin="10,0,0,0" Width="450" Orientation="Horizontal" VerticalAlignment="Center">
                     <ProgressBar x:Name="DownloadProgressbar" Height="28" Width="300"></ProgressBar>
-                    <TextBlock x:Name="ProgressTextblock" Height="28" FontSize="16" TextAlignment="Center"  Text="0/0"  />
+                    <TextBlock x:Name="ProgressTextblock" Height="28" FontSize="12" VerticalAlignment="Center"  TextAlignment="Center"  Text="0/0"  />
                 </StackPanel>
 
             </StackPanel>
@@ -56,7 +75,7 @@
             <StackPanel Orientation="Vertical">
             </StackPanel>
             <StackPanel>
-                <ListView x:Name="TileDownloadTaskManagerListView" MinHeight="150" MaxHeight="500">
+                <ListView x:Name="TileDownloadTaskManagerListView" MinHeight="150" MaxHeight="300" Height="300">
                     <ListView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type gt:TileDownloaderTask}" >
                             <StackPanel Orientation="Horizontal">

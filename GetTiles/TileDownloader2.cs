@@ -91,6 +91,28 @@ namespace GetTiles
             };
         }
 
+        public void LonlatInit()
+        {
+            Origin.X = -180;
+            Origin.Y = 90;
+            TilesDownloadExtent = new DoubleExtent()
+            {
+                xMin = -180,
+                yMin = -90,
+                xMax = 180,
+                yMax = 90
+            };
+            //Scales = GetTiles.Scales.GoogleScales();
+            Dpi = 96.0;
+            Resolutions = GetTiles.Resolutions.GetLonlatScaleResolutions();
+            //Resolutions = GetTiles.Resolutions.GetResolutionsByScalesAndDpi(scales, Dpi);
+            TileSize = new Size()
+            {
+                Width = 256,
+                Height = 256
+            };
+        }
+
         public void AbsFloorExtent()
         {
             this.TilesDownloadExtent.xMin = AbsFloor(this.TilesDownloadExtent.xMin);
@@ -190,6 +212,8 @@ namespace GetTiles
                         var server = GetRandomServerIndex();
                         var url = String.Format(this.UrlTemplate, z, y, x, server);
                         Trace.WriteLine(url);
+                        Trace.WriteLine(xFileFullName);
+                        this.TileDownloaderTasksManager.AddTask(url, xFileFullName);
                     }
                 }
             }

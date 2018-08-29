@@ -67,18 +67,6 @@ namespace GetTiles
 
 
             }
-
-            //var sf = String.Format("{0}{1}", "asd", "asd", "asde");
-            //var xstr = String.Format("{x}", new { x = "sd" });
-            //String.Format()
-            //var str012 = UrlStringParser.XyzTo012("http://t{s}.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}");
-
-
-
-
-
-
-            //IFormatProvider formatProvider =new 
             Console.ReadLine();
 
 
@@ -91,47 +79,10 @@ namespace GetTiles
 
         public static async Task DownloadDataAsync()
         {
-
-
             WebClient client = new WebClient();
-            //Console.WriteLine(hcga);
             var ddta = await client.DownloadDataTaskAsync("http://t0.tianditu.com/DataServer?T=vec_w&x=0&y=0&l=1");
-
-
             Console.WriteLine(ddta.Length);
-
         }
-
     }
-
-    public static class StringUtils
-    {
-        public static string XyzTo012(string xyzString)
-        {
-            var temp = xyzString;
-            temp = temp.Replace(@"{x}", @"{0}");
-            temp = temp.Replace(@"{y}", @"{1}");
-            temp = temp.Replace(@"{z}", @"{2}");
-            temp = temp.Replace(@"{s}", @"{3}");
-            return temp;
-        }
-        public static string SizeToReadable(long size)
-        {
-            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
-            double len = size;
-            int order = 0;
-            while (len >= 1024 && order < sizes.Length - 1)
-            {
-                order++;
-                len = len / 1024;
-            }
-            string result = String.Format("{0:0.##} {1}", len, sizes[order]);
-            return result;
-        }
-
-    }
-
-
-
 }
 

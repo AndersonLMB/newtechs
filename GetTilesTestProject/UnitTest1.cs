@@ -188,4 +188,28 @@ namespace GetTilesTestProject
             task.Wait();
         }
     }
+
+
+    [TestClass]
+    public class GeoUtilTests
+    {
+        /// <summary>
+        /// 根据名字获取经纬度范围字符串测试
+        /// </summary>
+        [TestMethod]
+        public void GetLonLatExtentByNameTest()
+        {
+            var input = "北京";
+            var output = GeoUtils.GetLonLatExtentStringFromAdministrativeByTdt(input);
+            Assert.AreEqual("115.422051,40.978643,117.383319,39.455766", output);
+        }
+
+        [TestMethod]
+        public void LonLatExtentStringToWebMctExtentStringTest()
+        {
+            GeoUtils.LonLatExtentStringToWebMctExtentString("115.422051,40.978643,117.383319,39.455766");
+
+        }
+
+    }
 }
